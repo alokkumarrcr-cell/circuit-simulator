@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Embedded Circuit Studio</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <div>
+            <h1>Embedded Circuit Studio</h1>
+            <p>Prototype Arduino, Raspberry Pi, ESP32 and sensor circuits with code-driven simulation.</p>
+          </div>
+        </div>
+        <div class="run-controls">
+          <button id="blankBtn" class="secondary-btn">Blank Canvas</button>
+          <button id="demoBtn" class="secondary-btn">Reference Circuit</button>
+          <a class="secondary-btn code-jump" href="#codePage">Code Simulator</a>
+          <button id="resetBtn" class="icon-btn" title="Reset workspace" aria-label="Reset workspace">Reset</button>
+          <button id="runBtn" class="primary-btn">Run Simulation</button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="library-panel" aria-label="Component library">
+          <div class="panel-head">
+            <h2>Parts</h2>
+            <input id="partSearch" type="search" placeholder="Search parts, e.g. MAX30102 or ESP32">
+          </div>
+          <div class="tabs" role="tablist" aria-label="Part categories">
+            <button class="tab active" data-category="boards">Boards</button>
+            <button class="tab" data-category="sensors">Sensors</button>
+            <button class="tab" data-category="power">Power</button>
+            <button class="tab" data-category="basic">Basic</button>
+          </div>
+          <div id="partsList" class="parts-list"></div>
+        </aside>
+
+        <section class="canvas-panel" aria-label="Circuit simulator">
+          <div class="canvas-toolbar">
+            <div class="mode-group" aria-label="Tool mode">
+              <button class="tool active" data-tool="select" title="Select and move parts">Sel</button>
+              <button class="tool" data-tool="wire" title="Connect wires">Wire</button>
+              <button class="tool" data-tool="probe" title="Probe values">Probe</button>
+            </div>
+            <div class="status-strip">
+              <span id="designCount">0 parts</span>
+              <span id="wireCount">0 wires</span>
+              <span id="selectedPart">No part selected</span>
+              <span id="simState">Idle</span>
+            </div>
+          </div>
+          <div class="board-wrap">
+            <svg id="wireLayer" class="wire-layer" aria-hidden="true"></svg>
+            <div id="circuitBoard" class="circuit-board"></div>
+          </div>
+        </section>
+
+        <aside class="inspector-panel" aria-label="Inspector and simulation">
+          <section class="inspector-block">
+            <h2>Inspector</h2>
+            <div id="inspector" class="inspector">
+              <p>Select a component to view pins, supply notes, and live values.</p>
+            </div>
+          </section>
+          <section class="inspector-block">
+            <h2>Design Actions</h2>
+            <div class="design-actions">
+              <button id="duplicateBtn">Duplicate</button>
+              <button id="deleteBtn">Delete</button>
+              <button id="clearWiresBtn">Clear Wires</button>
+              <button id="exportBtn">Export JSON</button>
+            </div>
+          </section>
+          <section class="inspector-block">
+            <h2>Live Signals</h2>
+            <div id="signals" class="signals"></div>
+          </section>
+          <section class="inspector-block">
+            <h2>Serial Monitor</h2>
+            <pre id="serialMonitor" class="serial-monitor">Ready.</pre>
+          </section>
+        </aside>
+      </main>
+
+      <section id="codePage" class="code-page">
+        <div class="code-head">
+          <div>
+            <h2>Code Simulator</h2>
+            <p>Write firmware, run it, and watch the circuit respond through matching components, pins, wires, serial output, and live values.</p>
+          </div>
+          <div class="code-actions">
+            <select id="codePreset" aria-label="Code preset">
+              <option value="esp32Health">ESP32 Health GPS SOS</option>
+              <option value="arduinoBlink">Arduino Blink</option>
+              <option value="raspberryPython">Raspberry Pi Python</option>
+              <option value="iotWeather">ESP32 IoT Weather</option>
+              <option value="robotDriver">Robot Driver</option>
+              <option value="blank">Blank</option>
+            </select>
+            <button id="formatBtn">Format</button>
+            <button id="runCodeBtn" class="primary-btn">Run Code</button>
+          </div>
+        </div>
+
+        <div class="code-status-grid">
+          <div><strong id="compileState">Ready</strong><span>compile state</span></div>
+          <div><strong id="detectedBoard">ESP32-WROOM-32</strong><span>detected board</span></div>
+          <div><strong id="detectedHooks">0 hooks</strong><span>simulation hooks</span></div>
+          <div><strong id="detectedPins">0 pins</strong><span>pin references</span></div>
+        </div>
+
+        <div class="code-layout">
+          <textarea id="codeEditor" spellcheck="false"></textarea>
+          <div class="code-help">
+            <h3>Code Analysis</h3>
+            <pre id="codeConsole" class="code-console">Choose a preset or write code, then press Run Code.</pre>
+            <h3>Simulation Hooks</h3>
+            <p>Use names like <code>MAX30102</code>, <code>MPU6050</code>, <code>GPS</code>, <code>SOS</code>, <code>Buzzer</code>, <code>Motor</code>, <code>LED</code>, <code>digitalWrite</code>, and <code>Serial.print</code>. The simulator scans your code and animates matching parts.</p>
+            <div class="pin-card">
+              <strong>Reference Design</strong>
+              <span>ESP32-WROOM-32 + MAX30102 + MPU6050 + NEO-6M + SOS + buzzer + transistor-driven vibration motor + TP4056 Li-Po.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

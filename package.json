@@ -1,0 +1,9 @@
+{
+  "name": "embedded-circuit-studio",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npx serve . -l 5178",
+    "check": "node --check app.js"
+  }
+}
