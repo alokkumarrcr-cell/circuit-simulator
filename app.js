@@ -2,6 +2,79 @@
 (function() {
   const CATALOG = [
     // Boards
+    // Add to CATALOG in app.js:
+    {
+      id: "tds-sensor",
+      name: "Analog TDS Sensor Module",
+      category: "sensors",
+      badge: "TDS",
+      color: "#0284c7",
+      kind: "sensor",
+      desc: "Measures Total Dissolved Solids in water (0-1000 ppm). Outputs 0 - 2.3V.",
+      pins: ["VCC", "GND", "AOUT"],
+      visualClass: "visual-sensor",
+      defaultState: { tdsPpm: 242, voltage: "1.34 V", quality: "Potable Water" }
+    },
+    {
+      id: "yfs201",
+      name: "YF-S201 Water Flow Sensor",
+      category: "sensors",
+      badge: "FLOW",
+      color: "#0ea5e9",
+      kind: "sensor",
+      desc: "Hall effect water flow turbine (1-30 L/min). Produces 7.5 pulses/sec per L/min.",
+      pins: ["VCC", "GND", "PULSE"],
+      visualClass: "visual-basic",
+      defaultState: { flowRate: "5.2 L/min", pulseHz: "39 Hz", totalVolume: "14.8 L" }
+    },
+    {
+      id: "jetson-nano",
+      name: "NVIDIA Jetson Nano",
+      category: "boards",
+      badge: "JETSON",
+      color: "#76b900",
+      kind: "board",
+      desc: "128-core Maxwell GPU edge AI system for PyTorch, TensorRT, and video analytics.",
+      pins: ["5V", "3V3", "GND", "GPIO12", "GPIO13", "TX", "RX", "SCL", "SDA", "CSI_CAM"],
+      visualClass: "visual-board",
+      defaultState: { gpuUtil: "68 %", aiFps: "29.2 fps", ramMb: "1,940 MB" }
+    },
+    {
+      id: "rdkx5",
+      name: "D-Robotics RDK X5",
+      category: "boards",
+      badge: "RDK-X5",
+      color: "#ff6a00",
+      kind: "board",
+      desc: "Sunrise 5 AI board with 10 TOPS BPU, 4-lane MIPI CSI, 40-pin header & CAN FD.",
+      pins: ["5V", "3V3", "GND", "GPIO17", "GPIO27", "CAN_H", "CAN_L", "SCL", "SDA", "MIPI"],
+      visualClass: "visual-board",
+      defaultState: { bpuUtil: "74 %", nnModel: "YOLOv8s-BPU", latencyMs: "13.8 ms" }
+    },
+    {
+      id: "oak-d-lite",
+      name: "Luxonis OAK-D Lite",
+      category: "sensors",
+      badge: "OAK-D",
+      color: "#9333ea",
+      kind: "sensor",
+      desc: "Tri-camera 4K RGB + Stereo Depth with onboard 4 TOPS Intel Myriad X VPU.",
+      pins: ["VBUS", "GND", "DEPTH_OUT", "RGB_OUT"],
+      visualClass: "visual-sensor",
+      defaultState: { depthM: "1.35 m", target: "person (94%)", fps: "30 FPS" }
+    },
+    {
+      id: "raspberry-pi-cam",
+      name: "Raspberry Pi Camera",
+      category: "sensors",
+      badge: "PI-CAM",
+      color: "#e11d48",
+      kind: "sensor",
+      desc: "MIPI CSI-2 Camera Module with 1080p video, OpenCV & libcamera support.",
+      pins: ["3V3", "GND", "SDA", "SCL", "CSI_CLK", "CSI_DAT"],
+      visualClass: "visual-sensor",
+      defaultState: { res: "1920x1080 @ 30fps", iso: 200, shutter: "1/60s" }
+    }
     {
       id: "esp32-wroom",
       name: "ESP32-WROOM-32",
