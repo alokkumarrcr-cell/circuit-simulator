@@ -13,7 +13,7 @@
           <span class="brand-mark" aria-hidden="true"></span>
           <div>
             <h1>Embedded Circuit Studio</h1>
-            <p>Prototype Arduino, Raspberry Pi, ESP32 and sensor circuits with code-driven simulation.</p>
+            <p>Prototype Arduino, Raspberry Pi, ESP32, Jetson Nano, RDK X5, and intelligent sensor circuits.</p>
           </div>
         </div>
         <div class="run-controls">
@@ -29,7 +29,7 @@
         <aside class="library-panel" aria-label="Component library">
           <div class="panel-head">
             <h2>Parts</h2>
-            <input id="partSearch" type="search" placeholder="Search parts, e.g. MAX30102 or ESP32">
+            <input id="partSearch" type="search" placeholder="Search, e.g. TDS, Jetson, OAK-D...">
           </div>
           <div class="tabs" role="tablist" aria-label="Part categories">
             <button class="tab active" data-category="boards">Boards</button>
@@ -91,15 +91,15 @@
         <div class="code-head">
           <div>
             <h2>Code Simulator</h2>
-            <p>Write firmware, run it, and watch the circuit respond through matching components, pins, wires, serial output, and live values.</p>
+            <p>Write firmware or Python, run it, and animate matching boards, sensors, pins, and serial outputs.</p>
           </div>
           <div class="code-actions">
             <select id="codePreset" aria-label="Code preset">
+              <option value="waterStation">Water Station (TDS + YF-S201)</option>
+              <option value="edgeAi">Edge AI Vision (Jetson / RDK X5 + OAK-D / PiCam)</option>
               <option value="esp32Health">ESP32 Health GPS SOS</option>
               <option value="arduinoBlink">Arduino Blink</option>
               <option value="raspberryPython">Raspberry Pi Python</option>
-              <option value="iotWeather">ESP32 IoT Weather</option>
-              <option value="robotDriver">Robot Driver</option>
               <option value="blank">Blank</option>
             </select>
             <button id="formatBtn">Format</button>
@@ -109,7 +109,7 @@
 
         <div class="code-status-grid">
           <div><strong id="compileState">Ready</strong><span>compile state</span></div>
-          <div><strong id="detectedBoard">ESP32-WROOM-32</strong><span>detected board</span></div>
+          <div><strong id="detectedBoard">ESP32 / Jetson / RDK</strong><span>detected board</span></div>
           <div><strong id="detectedHooks">0 hooks</strong><span>simulation hooks</span></div>
           <div><strong id="detectedPins">0 pins</strong><span>pin references</span></div>
         </div>
@@ -118,13 +118,9 @@
           <textarea id="codeEditor" spellcheck="false"></textarea>
           <div class="code-help">
             <h3>Code Analysis</h3>
-            <pre id="codeConsole" class="code-console">Choose a preset or write code, then press Run Code.</pre>
+            <pre id="codeConsole" class="code-console">Select a preset or write code, then press Run Code.</pre>
             <h3>Simulation Hooks</h3>
-            <p>Use names like <code>MAX30102</code>, <code>MPU6050</code>, <code>GPS</code>, <code>SOS</code>, <code>Buzzer</code>, <code>Motor</code>, <code>LED</code>, <code>digitalWrite</code>, and <code>Serial.print</code>. The simulator scans your code and animates matching parts.</p>
-            <div class="pin-card">
-              <strong>Reference Design</strong>
-              <span>ESP32-WROOM-32 + MAX30102 + MPU6050 + NEO-6M + SOS + buzzer + transistor-driven vibration motor + TP4056 Li-Po.</span>
-            </div>
+            <p>Supports keywords like <code>TDS</code>, <code>flowRate</code>, <code>YFS201</code>, <code>jetson</code>, <code>rdkx5</code>, <code>depthai</code>, <code>picamera</code>, <code>MAX30102</code>, and <code>Serial.print</code>.</p>
           </div>
         </div>
       </section>
