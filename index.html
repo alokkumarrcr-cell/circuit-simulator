@@ -13,12 +13,18 @@
           <span class="brand-mark" aria-hidden="true"></span>
           <div>
             <h1>Embedded Circuit Studio</h1>
-            <p>Prototype Arduino, Raspberry Pi, ESP32, Jetson Nano, RDK X5, and intelligent sensor circuits.</p>
+            <p>Prototype Arduino, ESP32, Jetson Nano, RDK X5, biomedical, water & vision circuits.</p>
           </div>
         </div>
         <div class="run-controls">
           <button id="blankBtn" class="secondary-btn">Blank Canvas</button>
-          <button id="demoBtn" class="secondary-btn">Reference Circuit</button>
+          <select id="circuitSelect" class="secondary-btn" title="Choose Preset Circuit" style="font-weight:700; height:36px; padding:0 8px;">
+            <option value="esp32Health">Reference: ESP32 Health GPS SOS</option>
+            <option value="waterStation">Reference: Water Station (TDS + Flow)</option>
+            <option value="edgeAi">Reference: Edge AI (Jetson/RDK + OAK-D)</option>
+            <option value="robotics">Reference: Robot Obstacle Driver</option>
+          </select>
+          <button id="demoBtn" class="secondary-btn">Load Circuit</button>
           <a class="secondary-btn code-jump" href="#codePage">Code Simulator</a>
           <button id="resetBtn" class="icon-btn" title="Reset workspace" aria-label="Reset workspace">Reset</button>
           <button id="runBtn" class="primary-btn">Run Simulation</button>
@@ -29,7 +35,7 @@
         <aside class="library-panel" aria-label="Component library">
           <div class="panel-head">
             <h2>Parts</h2>
-            <input id="partSearch" type="search" placeholder="Search, e.g. TDS, Jetson, OAK-D...">
+            <input id="partSearch" type="search" placeholder="Search parts, e.g. TDS, MAX30102, Jetson...">
           </div>
           <div class="tabs" role="tablist" aria-label="Part categories">
             <button class="tab active" data-category="boards">Boards</button>
@@ -44,7 +50,7 @@
           <div class="canvas-toolbar">
             <div class="mode-group" aria-label="Tool mode">
               <button class="tool active" data-tool="select" title="Select and move parts">Sel</button>
-              <button class="tool" data-tool="wire" title="Connect wires">Wire</button>
+              <button class="tool" data-tool="wire" title="Connect wires between pins">Wire</button>
               <button class="tool" data-tool="probe" title="Probe values">Probe</button>
             </div>
             <div class="status-strip">
@@ -91,13 +97,15 @@
         <div class="code-head">
           <div>
             <h2>Code Simulator</h2>
-            <p>Write firmware or Python, run it, and animate matching boards, sensors, pins, and serial outputs.</p>
+            <p>Write firmware, run it, and animate matching boards, sensors, pins, and live serial outputs.</p>
           </div>
           <div class="code-actions">
             <select id="codePreset" aria-label="Code preset">
-              <option value="waterStation">Water Station (TDS + YF-S201)</option>
-              <option value="edgeAi">Edge AI Vision (Jetson / RDK X5 + OAK-D / PiCam)</option>
               <option value="esp32Health">ESP32 Health GPS SOS</option>
+              <option value="waterStation">Water Station (TDS + YF-S201)</option>
+              <option value="edgeAi">Edge AI (Jetson / RDK X5 + OAK-D / PiCam)</option>
+              <option value="iotWeather">ESP32 IoT Weather</option>
+              <option value="robotDriver">Robot Obstacle Driver</option>
               <option value="arduinoBlink">Arduino Blink</option>
               <option value="raspberryPython">Raspberry Pi Python</option>
               <option value="blank">Blank</option>
@@ -109,7 +117,7 @@
 
         <div class="code-status-grid">
           <div><strong id="compileState">Ready</strong><span>compile state</span></div>
-          <div><strong id="detectedBoard">ESP32 / Jetson / RDK</strong><span>detected board</span></div>
+          <div><strong id="detectedBoard">ESP32-WROOM-32</strong><span>detected board</span></div>
           <div><strong id="detectedHooks">0 hooks</strong><span>simulation hooks</span></div>
           <div><strong id="detectedPins">0 pins</strong><span>pin references</span></div>
         </div>
@@ -119,8 +127,8 @@
           <div class="code-help">
             <h3>Code Analysis</h3>
             <pre id="codeConsole" class="code-console">Select a preset or write code, then press Run Code.</pre>
-            <h3>Simulation Hooks</h3>
-            <p>Supports keywords like <code>TDS</code>, <code>flowRate</code>, <code>YFS201</code>, <code>jetson</code>, <code>rdkx5</code>, <code>depthai</code>, <code>picamera</code>, <code>MAX30102</code>, and <code>Serial.print</code>.</p>
+            <h3>Supported Simulation Hooks</h3>
+            <p>Use keywords like <code>MAX30102</code>, <code>MPU6050</code>, <code>GPS</code>, <code>SOS</code>, <code>TDS</code>, <code>flowRate</code>, <code>jetson</code>, <code>rdkx5</code>, <code>depthai</code>, <code>picamera</code>, <code>Buzzer</code>, and <code>Serial.print</code>.</p>
           </div>
         </div>
       </section>
