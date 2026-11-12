@@ -345,7 +345,6 @@ h1 {
   z-index: 3;
   user-select: none;
   overflow: hidden;
-  cursor: grab;
 }
 
 .component[data-id="esp32-wroom"] {
@@ -740,7 +739,6 @@ h1 {
   border: 1px solid rgba(0,0,0,0.3);
   padding: 0;
   flex: 0 0 auto;
-  cursor: pointer;
 }
 
 .pin:hover {
