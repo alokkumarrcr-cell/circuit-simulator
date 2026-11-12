@@ -1,6 +1,5 @@
-// Embedded Circuit Studio - Unified Engine (Original + New Circuits)
+// Embedded Circuit Studio - Original Simulation Engine
 (function() {
-  // --- FULL HARDWARE CATALOG (ORIGINAL + NEW) ---
   const CATALOG = [
     // Boards
     {
@@ -13,31 +12,7 @@
       desc: "Dual-core 240MHz Wi-Fi & BLE SoC with 30 GPIO pins, ADC, DAC, and I2C/SPI.",
       pins: ["3V3", "EN", "VP", "VN", "D34", "D35", "D32", "D33", "D25", "D26", "D27", "D14", "D12", "GND", "5V", "D23", "D22", "TX0", "RX0", "D21", "D19", "D18", "D5", "D17", "D16", "D4", "D0", "D2", "D15"],
       visualClass: "esp32-real",
-      defaultState: { wifi: "Connected (4G Gateway)", heap: 184320, tempC: 38.2, ble: "Advertising" }
-    },
-    {
-      id: "jetson-nano",
-      name: "NVIDIA Jetson Nano",
-      category: "boards",
-      badge: "JETSON",
-      color: "#76b900",
-      kind: "board",
-      desc: "128-core Maxwell GPU edge AI board for PyTorch, TensorRT, and video analytics.",
-      pins: ["5V", "3V3", "GND", "GPIO12", "GPIO13", "TX", "RX", "SCL", "SDA", "CSI_CAM"],
-      visualClass: "visual-jetson",
-      defaultState: { gpuUtil: 68, aiFps: 29.2, ramMb: 1940 }
-    },
-    {
-      id: "rdkx5",
-      name: "D-Robotics RDK X5",
-      category: "boards",
-      badge: "RDK-X5",
-      color: "#ff6a00",
-      kind: "board",
-      desc: "Sunrise 5 AI board with 10 TOPS BPU, 4-lane MIPI CSI, 40-pin header & CAN FD.",
-      pins: ["5V", "3V3", "GND", "GPIO17", "GPIO27", "CAN_H", "CAN_L", "SCL", "SDA", "MIPI"],
-      visualClass: "visual-rdkx5",
-      defaultState: { bpuUtil: 74, nnModel: "YOLOv8s-BPU", latencyMs: 13.8 }
+      defaultState: { wifi: "Connected", heap: 184320, tempC: 38.2, status: "Normal" }
     },
     {
       id: "arduino-uno",
@@ -75,7 +50,7 @@
       desc: "Heart-rate and SpO2 blood-oxygen sensor with I2C interface.",
       pins: ["VIN", "GND", "SDA", "SCL", "INT"],
       visualClass: "visual-sensor",
-      defaultState: { bpm: 74, spo2: 98.2, status: "Finger Detected" }
+      defaultState: { bpm: 74, spo2: 98.4, status: "Finger Detected" }
     },
     {
       id: "mpu6050",
@@ -102,61 +77,13 @@
       defaultState: { lat: "12.9716 N", lon: "77.5946 E", sats: 9, fix: "3D Fix" }
     },
     {
-      id: "tds-sensor",
-      name: "Analog TDS Sensor Module",
-      category: "sensors",
-      badge: "TDS",
-      color: "#0284c7",
-      kind: "sensor",
-      desc: "Total Dissolved Solids water quality sensor (0-1000 ppm). Outputs 0-2.3V.",
-      pins: ["VCC", "GND", "AOUT"],
-      visualClass: "visual-tds",
-      defaultState: { tdsPpm: 242, voltage: 1.34, quality: "Potable Clean Water" }
-    },
-    {
-      id: "yfs201",
-      name: "YF-S201 Water Flow Sensor",
-      category: "sensors",
-      badge: "FLOW",
-      color: "#0ea5e9",
-      kind: "sensor",
-      desc: "Hall effect water flow sensor (1-30 L/min). Produces 7.5 pulses/sec per L/min.",
-      pins: ["VCC", "GND", "PULSE"],
-      visualClass: "visual-flow",
-      defaultState: { flowRate: 5.2, pulseHz: 39, totalVolume: 14.8 }
-    },
-    {
-      id: "oak-d-lite",
-      name: "Luxonis OAK-D Lite",
-      category: "sensors",
-      badge: "OAK-D",
-      color: "#9333ea",
-      kind: "sensor",
-      desc: "Tri-camera 4K RGB + Stereo Depth with onboard 4 TOPS Intel Myriad X VPU.",
-      pins: ["VBUS", "GND", "DEPTH_OUT", "RGB_OUT"],
-      visualClass: "visual-oak-d",
-      defaultState: { depthM: 1.35, target: "person (94%)", fps: 30 }
-    },
-    {
-      id: "raspberry-pi-cam",
-      name: "Raspberry Pi Camera",
-      category: "sensors",
-      badge: "PI-CAM",
-      color: "#e11d48",
-      kind: "sensor",
-      desc: "MIPI CSI-2 Camera Module with 1080p video, OpenCV & libcamera support.",
-      pins: ["3V3", "GND", "SDA", "SCL", "CSI_CLK", "CSI_DAT"],
-      visualClass: "visual-picam",
-      defaultState: { res: "1920x1080 @ 30fps", iso: 200, shutter: "1/60s" }
-    },
-    {
       id: "dht22",
       name: "DHT22 / BME280 Sensor",
       category: "sensors",
       badge: "DHT",
       color: "#059669",
       kind: "sensor",
-      desc: "High accuracy digital ambient temperature, humidity, and barometric sensor.",
+      desc: "Digital temperature, humidity, and barometric sensor.",
       pins: ["VCC", "GND", "DATA"],
       visualClass: "visual-sensor",
       defaultState: { temp: "26.4 °C", humidity: "58 %", pressure: "1013 hPa" }
@@ -182,7 +109,7 @@
       badge: "TP4056",
       color: "#2563eb",
       kind: "power",
-      desc: "1A Li-Ion battery charging module with constant-current/voltage & protection.",
+      desc: "1A Constant-Current/Constant-Voltage Li-ion battery charger with protection.",
       pins: ["IN+", "IN-", "BAT+", "BAT-", "OUT+", "OUT-"],
       visualClass: "visual-power",
       defaultState: { vbat: "4.12 V", chgCurrent: "480 mA", status: "Charging" }
@@ -203,7 +130,7 @@
     // Basic
     {
       id: "sos-button",
-      name: "Emergency SOS Button",
+      name: "SOS Push Button",
       category: "basic",
       badge: "SOS",
       color: "#dc2626",
@@ -215,7 +142,7 @@
     },
     {
       id: "buzzer",
-      name: "Piezo Buzzer Alarm",
+      name: "Piezo Buzzer",
       category: "basic",
       badge: "BUZZ",
       color: "#64748b",
@@ -227,34 +154,32 @@
     },
     {
       id: "vibration",
-      name: "Haptic Vibration Motor",
+      name: "Vibration Motor",
       category: "basic",
       badge: "VIB",
       color: "#d97706",
       kind: "basic",
-      desc: "Transistor-driven ERM vibration motor for physical tactile feedback.",
+      desc: "Transistor-driven vibration motor for haptic tactile feedback.",
       pins: ["BASE", "VCC", "GND"],
       visualClass: "visual-basic",
-      defaultState: { rpm: 0, status: "Idle" }
+      defaultState: { status: "Idle" }
     },
     {
       id: "led",
-      name: "Status Indicator LED",
+      name: "Status LED",
       category: "basic",
       badge: "LED",
       color: "#16a34a",
       kind: "basic",
-      desc: "5mm colored LED with series resistor.",
+      desc: "5mm colored LED indicator.",
       pins: ["ANODE", "CATHODE"],
       visualClass: "visual-basic",
       defaultState: { state: "OFF" }
     }
   ];
 
-  // --- PRESET CODES (ORIGINAL + NEW) ---
   const PRESETS = {
-    // 1. ESP32 Health GPS SOS (Original Reference)
-    esp32Health: `// ESP32 Health Watchdog: MAX30102 + MPU6050 + NEO-6M GPS + SOS Button
+    esp32Health: `// Reference Design: ESP32 Health GPS SOS
 #include <Wire.h>
 #define SOS_PIN 15
 #define BUZZER_PIN 18
@@ -273,22 +198,21 @@ void setup() {
   pinMode(VIB_PIN, OUTPUT);
   attachInterrupt(digitalPinToInterrupt(SOS_PIN), onSosPressed, FALLING);
 
-  Serial.println("[SYSTEM] ESP32 Medical Wearable Initialized");
+  Serial.println("[SYSTEM] ESP32 Wearable Initialized");
   Serial.println("[SENSORS] MAX30102 Oximeter & MPU6050 IMU Online");
   Serial.println("[GPS] NEO-6M Locked: 9 Satellites Active");
 }
 
 void loop() {
-  // Read simulated biomedical vitals
   int bpm = 74;
   float spo2 = 98.4;
-  float accelZ = 0.98; // Fall detection vector
+  float accelZ = 0.98;
 
   if (emergencyAlert || accelZ < 0.2) {
     digitalWrite(BUZZER_PIN, HIGH);
     digitalWrite(VIB_PIN, HIGH);
     Serial.println("[CRITICAL ALERT] SOS Triggered / Fall Detected!");
-    Serial.println("[GPS DISPATCH] Transmitting Coordinates: Lat 12.9716 N, Lon 77.5946 E");
+    Serial.println("[GPS DISPATCH] Coordinates: Lat 12.9716 N, Lon 77.5946 E");
     delay(500);
     digitalWrite(BUZZER_PIN, LOW);
     digitalWrite(VIB_PIN, LOW);
@@ -301,66 +225,24 @@ void loop() {
   delay(1000);
 }`,
 
-    // 2. Water Station (TDS + YF-S201 Flow)
-    waterStation: `// Water Station: Analog TDS Sensor + YF-S201 Flow Sensor
-#define TDS_PIN A0
-#define FLOW_PIN 2
-
-volatile unsigned long pulseCount = 0;
-float flowRateLMin = 0.0;
-float totalVolumeL = 0.0;
-
-void IRAM_ATTR onFlowPulse() {
-  pulseCount++;
+    arduinoBlink: `void setup() {
+  pinMode(13, OUTPUT);
 }
-
-void setup() {
-  Serial.begin(115200);
-  pinMode(FLOW_PIN, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(FLOW_PIN), onFlowPulse, RISING);
-  Serial.println("[WATER STATION] Telemetry Node Online");
-}
-
 void loop() {
-  // YF-S201 Flow rate (7.5 pulses per second = 1 L/min)
-  flowRateLMin = pulseCount / 7.5;
-  totalVolumeL += (flowRateLMin / 60.0);
-  pulseCount = 0;
-
-  // TDS Reading (0 - 2.3V analog input converted to ppm)
-  int rawAdc = analogRead(TDS_PIN);
-  float voltage = rawAdc * (3.3 / 4095.0);
-  float tdsPpm = (voltage / 2.3) * 1000.0;
-
-  Serial.print("[TDS] Purity: "); Serial.print(tdsPpm, 0); Serial.print(" ppm (");
-  Serial.print(voltage, 2); Serial.print("V) | [FLOW] Rate: ");
-  Serial.print(flowRateLMin, 1); Serial.print(" L/min | Total: ");
-  Serial.print(totalVolumeL, 2); Serial.println(" L");
-  delay(1000);
+  digitalWrite(13, HIGH);
+  delay(500);
+  digitalWrite(13, LOW);
+  delay(500);
 }`,
 
-    // 3. Edge AI Vision (Jetson Nano / RDK X5 + OAK-D Lite + PiCam)
-    edgeAi: `# Edge AI Vision Pipeline: Jetson Maxwell GPU & Horizon BPU
-import depthai as dai
-import numpy as np
-
-print("[BOOT] Starting TensorRT & DepthAI Pipeline...")
-pipeline = dai.Pipeline()
-
-# Setup OAK-D Lite Stereo Depth & Neural Network
-stereo = pipeline.create(dai.node.StereoDepth)
-yolo = pipeline.create(dai.node.YoloSpatialDetectionNetwork)
-print("[DEVICE] Jetson Maxwell GPU & RDK X5 BPU Initialized")
-
-frame_id = 0
-while frame_id < 60:
-    frame_id += 1
-    depth = 1.35 + np.sin(frame_id / 6.0) * 0.15
-    print(f"[OAK-D / PiCam] Frame {frame_id:03d} | Object: person (94%) | Depth: {depth:.2f} m | Latency: 13.8 ms")
+    raspberryPython: `import time
+print("Raspberry Pi 4 Linux Node Active")
+while True:
+    print("Reading GPIO signals...")
+    time.sleep(1)
 `,
 
-    // 4. ESP32 IoT Weather
-    iotWeather: `// ESP32 IoT Weather Station: DHT22 / BME280 Environment Node
+    iotWeather: `// ESP32 IoT Weather Station
 #include <WiFi.h>
 
 void setup() {
@@ -376,12 +258,11 @@ void loop() {
 
   Serial.print("[DATA] Temp: "); Serial.print(temp); Serial.print(" C | Humidity: ");
   Serial.print(hum); Serial.print(" % | Pressure: "); Serial.print(pressure); Serial.println(" hPa");
-  Serial.println("[MQTT] Publishing payload to AWS IoT Core...");
+  Serial.println("[MQTT] Publishing payload to cloud...");
   delay(2000);
 }`,
 
-    // 5. Robot Driver
-    robotDriver: `// Autonomous Robot Obstacle Avoidance (Ultrasonic HC-SR04 + Motor Driver)
+    robotDriver: `// Autonomous Robot Obstacle Avoidance
 #define TRIG 5
 #define ECHO 18
 
@@ -393,37 +274,17 @@ void setup() {
 }
 
 void loop() {
-  int distanceCm = 42; // Sonar reading
+  int distanceCm = 42;
   if (distanceCm < 20) {
-    Serial.println("[OBSTACLE] Obstacle detected within 20cm! Reversing and Turning...");
+    Serial.println("[OBSTACLE] Obstacle within 20cm! Reversing and Turning...");
   } else {
     Serial.println("[NAV] Path clear. Moving forward (Speed: 200 PWM)");
   }
   delay(1000);
 }`,
-
-    // 6. Arduino Blink
-    arduinoBlink: `void setup() {
-  pinMode(13, OUTPUT);
-}
-void loop() {
-  digitalWrite(13, HIGH);
-  delay(500);
-  digitalWrite(13, LOW);
-  delay(500);
-}`,
-
-    // 7. Raspberry Pi Python
-    raspberryPython: `import time
-print("Raspberry Pi 4 Linux Node Active")
-while True:
-    print("Reading GPIO signals & CSI Camera feed...")
-    time.sleep(1)
-`,
     blank: ""
   };
 
-  // --- STATE ---
   let placedComponents = [];
   let wires = [];
   let selectedCompId = null;
@@ -433,7 +294,6 @@ while True:
   let simTick = 0;
   let wireStartPin = null;
 
-  // DOM Handles
   const partsListEl = document.getElementById("partsList");
   const circuitBoardEl = document.getElementById("circuitBoard");
   const wireLayerEl = document.getElementById("wireLayer");
@@ -448,7 +308,6 @@ while True:
   const runBtn = document.getElementById("runBtn");
   const codeEditorEl = document.getElementById("codeEditor");
   const codePresetEl = document.getElementById("codePreset");
-  const circuitSelectEl = document.getElementById("circuitSelect");
   const runCodeBtn = document.getElementById("runCodeBtn");
   const codeConsoleEl = document.getElementById("codeConsole");
   const compileStateEl = document.getElementById("compileState");
@@ -456,7 +315,6 @@ while True:
   const detectedHooksEl = document.getElementById("detectedHooks");
   const detectedPinsEl = document.getElementById("detectedPins");
 
-  // --- RENDER PARTS CATALOG ---
   function renderCatalog(filterCat = "boards", query = "") {
     partsListEl.innerHTML = "";
     const filtered = CATALOG.filter(p => {
@@ -480,10 +338,9 @@ while True:
     });
   }
 
-  // --- ADD COMPONENT TO BOARD ---
   function addComponentToBoard(catalogId, x, y) {
     const proto = CATALOG.find(c => c.id === catalogId);
-    if (!proto) return;
+    if (!proto) return null;
 
     const instanceId = `inst_${Date.now()}_${Math.floor(Math.random()*1000)}`;
     const posX = x !== undefined ? x : 40 + (placedComponents.length % 5) * 160;
@@ -509,7 +366,6 @@ while True:
     return comp;
   }
 
-  // --- RENDER BOARD ---
   function renderBoard() {
     circuitBoardEl.innerHTML = "";
     placedComponents.forEach(c => {
@@ -529,12 +385,14 @@ while True:
           <div class="esp32-real">
             <div class="esp32-antenna"></div>
             <div class="esp32-module">
-              <strong>ESP-WROOM-32</strong>
+              <strong>ESP32-WROOM-32</strong>
               <span>Wi-Fi + BLE</span>
               <small>FCC ID: 2AC7Z</small>
             </div>
             <div class="esp32-chip main"></div>
             <div class="esp32-led"></div>
+            <div class="esp32-button boot"><span>BOOT</span></div>
+            <div class="esp32-button reset"><span>EN</span></div>
             <div class="esp32-usb uart"><span>UART</span></div>
             <div class="esp32-usb usb"><span>USB</span></div>
             <div class="esp32-pins left">
@@ -545,18 +403,6 @@ while True:
             </div>
           </div>
         `;
-      } else if (c.visualClass === "visual-jetson") {
-        visualHtml = `<div class="visual-jetson"></div>`;
-      } else if (c.visualClass === "visual-rdkx5") {
-        visualHtml = `<div class="visual-rdkx5"><div class="bpu-chip"><span>SUNRISE 5</span><small>10 TOPS</small></div></div>`;
-      } else if (c.visualClass === "visual-oak-d") {
-        visualHtml = `<div class="visual-oak-d"><div class="lens"></div><div class="lens rgb"></div><div class="lens"></div></div>`;
-      } else if (c.visualClass === "visual-picam") {
-        visualHtml = `<div class="visual-picam"><div class="sensor-box"><div class="sensor-lens"></div></div></div>`;
-      } else if (c.visualClass === "visual-tds") {
-        visualHtml = `<div class="visual-tds"><div class="probe-prongs"><span></span><span></span></div><div class="potentiometer"></div></div>`;
-      } else if (c.visualClass === "visual-flow") {
-        visualHtml = `<div class="visual-flow"><div class="turbine-wheel"></div></div>`;
       } else {
         visualHtml = `<div class="${c.visualClass}"></div>`;
       }
@@ -575,7 +421,6 @@ while True:
         </div>
       `;
 
-      // Dragging logic
       el.onmousedown = (e) => {
         if (e.target.classList.contains("pin")) return;
         selectComponent(c.instanceId);
@@ -606,7 +451,6 @@ while True:
       circuitBoardEl.appendChild(el);
     });
 
-    // Wire connection handlers
     circuitBoardEl.querySelectorAll(".pin").forEach(pinEl => {
       pinEl.onclick = (e) => {
         e.stopPropagation();
@@ -630,7 +474,6 @@ while True:
     renderWires();
   }
 
-  // --- RENDER WIRES ---
   function renderWires() {
     wireLayerEl.innerHTML = "";
     wires.forEach(w => {
@@ -661,7 +504,6 @@ while True:
     });
   }
 
-  // --- SELECTION & INSPECTOR ---
   function selectComponent(instId) {
     selectedCompId = instId;
     const comp = placedComponents.find(c => c.instanceId === instId);
@@ -705,7 +547,6 @@ while True:
     wireCountEl.textContent = `${wires.length} wires`;
   }
 
-  // --- SIMULATION TICK ---
   function startSimulation() {
     isSimulating = true;
     simStateEl.textContent = "Running";
@@ -717,7 +558,6 @@ while True:
     simInterval = setInterval(() => {
       simTick++;
       placedComponents.forEach(c => {
-        // Original Medical / Health components
         if (c.catalogId === "max30102") {
           c.state.bpm = 72 + Math.round(Math.sin(simTick / 3) * 4);
           c.state.spo2 = +(98.0 + Math.cos(simTick / 4) * 0.5).toFixed(1);
@@ -731,50 +571,6 @@ while True:
         if (c.catalogId === "tp4056") {
           c.state.vbat = `${(4.12 - (simTick * 0.001)).toFixed(2)} V`;
         }
-
-        // New Water Station components
-        if (c.catalogId === "tds-sensor") {
-          const ppm = Math.round(235 + Math.sin(simTick / 4) * 12);
-          c.state = {
-            tdsPpm: `${ppm} ppm`,
-            voltage: `${(ppm * 0.0023).toFixed(2)} V`,
-            quality: ppm < 300 ? "Potable Clean Water" : "High Mineral"
-          };
-        }
-        if (c.catalogId === "yfs201") {
-          const flow = +(5.0 + Math.sin(simTick / 3) * 1.5).toFixed(1);
-          c.state = {
-            flowRate: `${flow} L/min`,
-            pulseHz: `${Math.round(flow * 7.5)} Hz`,
-            totalVolume: `${(14.8 + simTick * 0.08).toFixed(2)} L`
-          };
-        }
-
-        // New Edge AI components
-        if (c.catalogId === "jetson-nano") {
-          c.state = {
-            gpuUtil: `${Math.round(62 + Math.sin(simTick / 3) * 15)} %`,
-            aiFps: `${(28.5 + Math.cos(simTick / 4) * 1.5).toFixed(1)} fps`,
-            ramMb: "1,940 MB"
-          };
-        }
-        if (c.catalogId === "rdkx5") {
-          c.state = {
-            bpuUtil: `${Math.round(70 + Math.cos(simTick / 3) * 12)} %`,
-            nnModel: "YOLOv8s-BPU",
-            latencyMs: `${(13.2 + Math.sin(simTick / 2) * 1.2).toFixed(1)} ms`
-          };
-        }
-        if (c.catalogId === "oak-d-lite") {
-          c.state = {
-            depthM: `${(1.3 + Math.abs(Math.sin(simTick / 5) * 0.4)).toFixed(2)} m`,
-            target: `person (${Math.round(90 + Math.sin(simTick)*6)}%)`,
-            fps: "30 FPS"
-          };
-        }
-        if (c.catalogId === "raspberry-pi-cam") {
-          c.state = { res: "1920x1080 @ 30fps", iso: simTick % 2 === 0 ? 200 : 400, shutter: "1/60s" };
-        }
       });
 
       if (selectedCompId) {
@@ -782,7 +578,10 @@ while True:
         if (cur) renderSignals(cur);
       }
 
-      appendSerialLog();
+      const timestamp = new Date().toLocaleTimeString();
+      const log = `[${timestamp}] [HEALTH] HR: 74 BPM | SpO2: 98.4% | GPS: 12.9716 N, 77.5946 E | Battery: 4.12V`;
+      serialEl.textContent += log + "\n";
+      serialEl.scrollTop = serialEl.scrollHeight;
     }, 1000);
   }
 
@@ -796,43 +595,14 @@ while True:
     renderBoard();
   }
 
-  function appendSerialLog() {
-    const timestamp = new Date().toLocaleTimeString();
-    let msg = "";
-
-    const hasEsp32Health = placedComponents.some(c => c.catalogId === "max30102");
-    const hasWater = placedComponents.some(c => c.catalogId === "tds-sensor");
-    const hasAi = placedComponents.some(c => c.catalogId === "oak-d-lite" || c.catalogId === "jetson-nano");
-
-    if (hasEsp32Health) {
-      msg = `[${timestamp}] [HEALTH] HR: 74 BPM | SpO2: 98.4% | GPS: 12.9716 N, 77.5946 E (9 Sats) | Status: OK`;
-    } else if (hasWater) {
-      msg = `[${timestamp}] [TDS] 242 ppm (1.34V) Potable | [FLOW] 5.2 L/min (39 Hz) | Total: 14.8 L`;
-    } else if (hasAi) {
-      msg = `[${timestamp}] [OAK-D] Depth: 1.35m | Jetson Maxwell GPU: 68% | Class: 'person' (94%)`;
-    } else {
-      msg = `[${timestamp}] Simulation tick ${simTick} | Telemetry broadcast normal.`;
-    }
-
-    serialEl.textContent += msg + "\n";
-    serialEl.scrollTop = serialEl.scrollHeight;
-  }
-
-  // --- CODE SIMULATOR SCANNER ---
   function analyzeCode(code) {
     const hooks = [];
     const pins = [];
     
-    if (/max30102|spo2|heartrate|bpm/i.test(code)) hooks.push("MAX30102 Oximeter");
-    if (/mpu6050|accel|gyro|dmp/i.test(code)) hooks.push("MPU6050 6-Axis IMU");
-    if (/gps|neo-?6m|tinygps/i.test(code)) hooks.push("NEO-6M GPS Module");
-    if (/sos|alarm|buzzer/i.test(code)) hooks.push("SOS & Alarm Drivers");
-    if (/tds|TDS|analogRead/i.test(code)) hooks.push("TDS Water Sensor");
-    if (/flow|pulse|YFS201|yfs201/i.test(code)) hooks.push("YF-S201 Flow Sensor");
-    if (/jetson|cuda|torch|tensorrt/i.test(code)) hooks.push("Jetson Maxwell GPU");
-    if (/rdk|sunrise|bpu/i.test(code)) hooks.push("RDK X5 BPU Acceleration");
-    if (/depthai|dai|oak/i.test(code)) hooks.push("OAK-D Spatial Depth");
-    if (/picamera|libcamera|cv2/i.test(code)) hooks.push("Raspberry Pi CSI Cam");
+    if (/max30102|spo2|heartrate|bpm/i.test(code)) hooks.push("MAX30102");
+    if (/mpu6050|accel|gyro/i.test(code)) hooks.push("MPU6050");
+    if (/gps|neo-?6m/i.test(code)) hooks.push("NEO-6M GPS");
+    if (/sos|alarm|buzzer/i.test(code)) hooks.push("SOS/Buzzer");
 
     const pinMatches = code.match(/(?:pinMode|digitalWrite|analogRead|digitalRead)\s*\(\s*([A-Za-z0-9_]+)/g) || [];
     pinMatches.forEach(p => pins.push(p.replace(/.*[\(\s]/, "")));
@@ -840,104 +610,51 @@ while True:
     detectedHooksEl.textContent = `${hooks.length} hooks`;
     detectedPinsEl.textContent = `${pins.length} pins`;
     
-    let board = "Generic Microcontroller";
-    if (/jetson/i.test(code)) board = "NVIDIA Jetson Nano";
-    else if (/rdk|sunrise/i.test(code)) board = "D-Robotics RDK X5";
-    else if (/esp32/i.test(code)) board = "ESP32-WROOM-32";
-    else if (/arduino/i.test(code)) board = "Arduino Uno R3";
+    let board = "Generic Board";
+    if (/esp32/i.test(code)) board = "ESP32-WROOM-32";
+    else if (/arduino/i.test(code)) board = "Arduino Uno";
     detectedBoardEl.textContent = board;
 
-    codeConsoleEl.textContent = `[ANALYZER] Found ${hooks.length} hardware hooks and ${pins.length} pin references.\nTarget Board: ${board}\nCompile State: OK`;
+    codeConsoleEl.textContent = `[ANALYSIS] Scanned ${hooks.length} hooks, ${pins.length} pins.\nDetected Board: ${board}\nStatus: Ready.`;
     compileStateEl.textContent = "Compiled";
   }
 
-  // --- PRESET CIRCUITS LOADER ---
-  function loadPresetCircuit(type) {
+  // Load Reference Design (ESP32-WROOM-32 + MAX30102 + MPU6050 + NEO-6M + SOS + Buzzer + Motor + TP4056)
+  function loadReferenceDesign() {
     stopSimulation();
     placedComponents = [];
     wires = [];
 
-    if (type === "esp32Health") {
-      // 1. ORIGINAL REFERENCE DESIGN: ESP32 Health GPS SOS
-      const esp = addComponentToBoard("esp32-wroom", 40, 40);
-      const oximeter = addComponentToBoard("max30102", 330, 40);
-      const imu = addComponentToBoard("mpu6050", 520, 40);
-      const gps = addComponentToBoard("neo6m", 710, 40);
-      const sos = addComponentToBoard("sos-button", 330, 240);
-      const buzz = addComponentToBoard("buzzer", 520, 240);
-      const vib = addComponentToBoard("vibration", 710, 240);
-      const batt = addComponentToBoard("tp4056", 330, 440);
+    const esp = addComponentToBoard("esp32-wroom", 40, 40);
+    const oximeter = addComponentToBoard("max30102", 330, 40);
+    const imu = addComponentToBoard("mpu6050", 520, 40);
+    const gps = addComponentToBoard("neo6m", 710, 40);
+    const sos = addComponentToBoard("sos-button", 330, 240);
+    const buzz = addComponentToBoard("buzzer", 520, 240);
+    const vib = addComponentToBoard("vibration", 710, 240);
+    const batt = addComponentToBoard("tp4056", 330, 440);
 
-      // Wires
-      wires.push({ from: { inst: esp.instanceId, pin: "3V3" }, to: { inst: oximeter.instanceId, pin: "VIN" } });
-      wires.push({ from: { inst: esp.instanceId, pin: "D21" }, to: { inst: oximeter.instanceId, pin: "SDA" } });
-      wires.push({ from: { inst: esp.instanceId, pin: "D22" }, to: { inst: oximeter.instanceId, pin: "SCL" } });
-      wires.push({ from: { inst: esp.instanceId, pin: "D21" }, to: { inst: imu.instanceId, pin: "SDA" } });
-      wires.push({ from: { inst: esp.instanceId, pin: "D22" }, to: { inst: imu.instanceId, pin: "SCL" } });
-      wires.push({ from: { inst: esp.instanceId, pin: "TX0" }, to: { inst: gps.instanceId, pin: "RX" } });
-      wires.push({ from: { inst: esp.instanceId, pin: "RX0" }, to: { inst: gps.instanceId, pin: "TX" } });
-      wires.push({ from: { inst: esp.instanceId, pin: "D15" }, to: { inst: sos.instanceId, pin: "PIN_A" } });
-      wires.push({ from: { inst: esp.instanceId, pin: "D18" }, to: { inst: buzz.instanceId, pin: "VCC" } });
-      wires.push({ from: { inst: esp.instanceId, pin: "D19" }, to: { inst: vib.instanceId, pin: "BASE" } });
-      wires.push({ from: { inst: esp.instanceId, pin: "5V" }, to: { inst: batt.instanceId, pin: "OUT+" } });
-
-      codePresetEl.value = "esp32Health";
-      codeEditorEl.value = PRESETS.esp32Health;
-    } else if (type === "waterStation") {
-      // 2. WATER MONITORING STATION (TDS + YF-S201)
-      const esp = addComponentToBoard("esp32-wroom", 40, 40);
-      const tds = addComponentToBoard("tds-sensor", 340, 40);
-      const flow = addComponentToBoard("yfs201", 580, 40);
-      const buzz = addComponentToBoard("buzzer", 340, 260);
-      const led = addComponentToBoard("led", 580, 260);
-
-      wires.push({ from: { inst: esp.instanceId, pin: "5V" }, to: { inst: tds.instanceId, pin: "VCC" } });
-      wires.push({ from: { inst: esp.instanceId, pin: "VP" }, to: { inst: tds.instanceId, pin: "AOUT" } });
-      wires.push({ from: { inst: esp.instanceId, pin: "5V" }, to: { inst: flow.instanceId, pin: "VCC" } });
-      wires.push({ from: { inst: esp.instanceId, pin: "D2" }, to: { inst: flow.instanceId, pin: "PULSE" } });
-      wires.push({ from: { inst: esp.instanceId, pin: "D18" }, to: { inst: buzz.instanceId, pin: "VCC" } });
-      wires.push({ from: { inst: esp.instanceId, pin: "D4" }, to: { inst: led.instanceId, pin: "ANODE" } });
-
-      codePresetEl.value = "waterStation";
-      codeEditorEl.value = PRESETS.waterStation;
-    } else if (type === "edgeAi") {
-      // 3. EDGE AI VISION (Jetson Nano / RDK X5 + OAK-D Lite + Pi Camera)
-      const jetson = addComponentToBoard("jetson-nano", 40, 40);
-      const rdk = addComponentToBoard("rdkx5", 300, 40);
-      const oak = addComponentToBoard("oak-d-lite", 560, 40);
-      const cam = addComponentToBoard("raspberry-pi-cam", 780, 40);
-      const buzz = addComponentToBoard("buzzer", 300, 260);
-      const led = addComponentToBoard("led", 560, 260);
-
-      wires.push({ from: { inst: jetson.instanceId, pin: "5V" }, to: { inst: oak.instanceId, pin: "VBUS" } });
-      wires.push({ from: { inst: rdk.instanceId, pin: "MIPI" }, to: { inst: cam.instanceId, pin: "CSI_DAT" } });
-      wires.push({ from: { inst: jetson.instanceId, pin: "GPIO12" }, to: { inst: buzz.instanceId, pin: "VCC" } });
-      wires.push({ from: { inst: rdk.instanceId, pin: "GPIO17" }, to: { inst: led.instanceId, pin: "ANODE" } });
-
-      codePresetEl.value = "edgeAi";
-      codeEditorEl.value = PRESETS.edgeAi;
-    } else if (type === "robotics") {
-      // 4. ROBOT OBSTACLE DRIVER
-      const uno = addComponentToBoard("arduino-uno", 40, 40);
-      const sonar = addComponentToBoard("hcsr04", 320, 40);
-      const led = addComponentToBoard("led", 540, 40);
-      const buzz = addComponentToBoard("buzzer", 320, 240);
-
-      wires.push({ from: { inst: uno.instanceId, pin: "5V" }, to: { inst: sonar.instanceId, pin: "VCC" } });
-      wires.push({ from: { inst: uno.instanceId, pin: "D2" }, to: { inst: sonar.instanceId, pin: "TRIG" } });
-      wires.push({ from: { inst: uno.instanceId, pin: "D3" }, to: { inst: sonar.instanceId, pin: "ECHO" } });
-      wires.push({ from: { inst: uno.instanceId, pin: "D13" }, to: { inst: led.instanceId, pin: "ANODE" } });
-
-      codePresetEl.value = "robotDriver";
-      codeEditorEl.value = PRESETS.robotDriver;
-    }
+    // Pre-connected reference wires
+    wires.push({ from: { inst: esp.instanceId, pin: "3V3" }, to: { inst: oximeter.instanceId, pin: "VIN" } });
+    wires.push({ from: { inst: esp.instanceId, pin: "D21" }, to: { inst: oximeter.instanceId, pin: "SDA" } });
+    wires.push({ from: { inst: esp.instanceId, pin: "D22" }, to: { inst: oximeter.instanceId, pin: "SCL" } });
+    wires.push({ from: { inst: esp.instanceId, pin: "D21" }, to: { inst: imu.instanceId, pin: "SDA" } });
+    wires.push({ from: { inst: esp.instanceId, pin: "D22" }, to: { inst: imu.instanceId, pin: "SCL" } });
+    wires.push({ from: { inst: esp.instanceId, pin: "TX0" }, to: { inst: gps.instanceId, pin: "RX" } });
+    wires.push({ from: { inst: esp.instanceId, pin: "RX0" }, to: { inst: gps.instanceId, pin: "TX" } });
+    wires.push({ from: { inst: esp.instanceId, pin: "D15" }, to: { inst: sos.instanceId, pin: "PIN_A" } });
+    wires.push({ from: { inst: esp.instanceId, pin: "D18" }, to: { inst: buzz.instanceId, pin: "VCC" } });
+    wires.push({ from: { inst: esp.instanceId, pin: "D19" }, to: { inst: vib.instanceId, pin: "BASE" } });
+    wires.push({ from: { inst: esp.instanceId, pin: "5V" }, to: { inst: batt.instanceId, pin: "OUT+" } });
 
     renderBoard();
     updateStatus();
+    codePresetEl.value = "esp32Health";
+    codeEditorEl.value = PRESETS.esp32Health;
     analyzeCode(codeEditorEl.value);
   }
 
-  // --- EVENT LISTENERS ---
+  // Event Listeners
   document.querySelectorAll(".tab").forEach(tab => {
     tab.onclick = () => {
       document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
@@ -971,17 +688,8 @@ while True:
     selectComponent(null);
   };
 
-  document.getElementById("demoBtn").onclick = () => {
-    loadPresetCircuit(circuitSelectEl.value);
-  };
-
-  circuitSelectEl.onchange = (e) => {
-    loadPresetCircuit(e.target.value);
-  };
-
-  document.getElementById("resetBtn").onclick = () => {
-    loadPresetCircuit("esp32Health");
-  };
+  document.getElementById("demoBtn").onclick = () => loadReferenceDesign();
+  document.getElementById("resetBtn").onclick = () => loadReferenceDesign();
 
   document.getElementById("deleteBtn").onclick = () => {
     if (!selectedCompId) return;
@@ -1018,7 +726,7 @@ while True:
     if (!isSimulating) startSimulation();
   };
 
-  // --- INITIALIZATION ---
+  // Init
   renderCatalog("boards");
-  loadPresetCircuit("esp32Health"); // Default to original reference circuit
+  loadReferenceDesign();
 })();
